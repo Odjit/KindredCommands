@@ -48,6 +48,16 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - will set the in game time to a day and hour. Basically controls what the sun is doing. Careful of effects on hearts and horses.
   - Example: *.settime 1 8*
 
+### Blood-Bound commands
+- `.bloodbound add (Item prefab name)`
+  - will add Blood-Bound attribute to an item. Saves out to config file to persist through restarts. Note: Attribute won't be displayed on client side since it remains unmodded.
+  - Example: *.bloodbound add Item_Ingredient_Crystal*
+  - Shortcut: *.bb a -257494203*	
+- `.bloodbound remove (Item prefab name)`
+  - will remove Blood-Bound attribute from an item. Saves out to config file to persist through restarts. Note: Attribute will be still displayed on client side since it remains unmodded.
+  - Example: *.bloodbound remove Item_Ingredient_Crystal*
+  - Shortcut: *.bb r -257494203*
+
 ### Gear Management Commands
 - `.gear headgear`
   - will toggle Headgear being bloodbound or not on the server. (Whether or not it drops on death). Saves out to config file to persist through restarts.

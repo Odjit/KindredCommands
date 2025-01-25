@@ -29,6 +29,7 @@ internal static class Core
 	public static ManualLogSource Log { get; } = Plugin.PluginLog;
 	public static AnnouncementsService AnnouncementsService { get; internal set; }
 	public static AuditService AuditService { get; } = new();
+	public static BloodBoundService BloodBoundService { get; private set; }
 	public static BoostedPlayerService BoostedPlayerService { get; internal set; }
 	public static BossService Boss { get; internal set; }
 	public static CastleTerritoryService CastleTerritory { get; private set; }
@@ -71,6 +72,7 @@ internal static class Core
 		Players = new();
 
 		AnnouncementsService = new();
+		BloodBoundService = new();
 		Boss = new();
 		CastleTerritory = new();
 		DropItem = new();

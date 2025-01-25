@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using Stunlock.Core;
 
@@ -31,6 +33,13 @@ internal class ConfigSettingsService
 			SaveConfig();
 		}
 	}
+
+	/// <summary>
+	/// Entities whenever added or removed from blood-bound category.
+	/// Key: prefab guid, Value: indicates if entity belongs to blood-bound category.
+	/// Call <see cref="SetBloodBound"/> to update.
+	/// </summary>
+	public IReadOnlyDictionary<string, bool> BloodBound => config.BloodBound;
 
 	public bool SoulshardsFlightRestricted
 	{
@@ -239,10 +248,43 @@ internal class ConfigSettingsService
 		}
 	}
 
+	/// <summary>
+	/// Adds/updates record in <see cref="BloodBound"/>.
+	/// Saves current config to a file.
+	/// </summary>
+	/// <param name="id">Record key.</param>
+	/// <param name="value">Record value.</param>
+	public void SetBloodBound(PrefabGUID id, bool value)
+	{
+		if (!Core.PrefabCollectionSystem.PrefabGuidToNameDictionary.TryGetValue(id, out string key))
+		{
+			key = id.GuidHash.ToString();
+		}
+
+		config.BloodBound[key] = value;
+		SaveConfig();
+	}
+
+	/// <summary>
+	/// Removes records for <see cref="BloodBound"/>.
+	/// Saves current config to a file.
+	/// </summary>
+	/// <param name="keys">Removes records from</param>
+	public void ClearBloodBound(IEnumerable<string> keys)
+	{
+		foreach (var key in keys)
+		{
+			config.BloodBound.Remove(key);
+		}
+
+		SaveConfig();
+	}
+
 	struct Config
 	{
 		public Config()
 		{
+			BloodBound = new Dictionary<string, bool>();
 			SoulshardsRestricted = true;
 			ItemDropLifetimeWhenDisabled = 300;
 			ShardDropLimit = 1;
@@ -250,6 +292,12 @@ internal class ConfigSettingsService
 		}
 
 		public bool RevealMapToAll { get; set; }
+
+		/// <summary>
+		/// Entities whenever added or removed from blood-bound category.
+		/// Key: prefab guid, Value: indicates if entity belongs to blood-bound category.
+		/// </summary>
+		public Dictionary<string, bool> BloodBound { get; set; }
 		public bool HeadgearBloodbound { get; set; }
 		public bool SoulshardsRestricted { get; set; }
 		public int ItemDropLifetime { get; set; }
@@ -280,6 +328,8 @@ internal class ConfigSettingsService
 		Core.Log.LogInfo("Current settings");
 		Core.Log.LogInfo($"RevealMapToAll: {RevealMapToAll}");
 		Core.Log.LogInfo($"HeadgearBloodbound: {HeadgearBloodbound}");
+		Core.Log.LogInfo($"BloodBound set for: {string.Join(", ", BloodBound.Where(p => p.Value).Select(p => p.Key))}");
+		Core.Log.LogInfo($"BloodBound unset for: {string.Join(", ", BloodBound.Where(p => !p.Value).Select(p => p.Key))}");
 		Core.Log.LogInfo($"SoulshardsRestricted: {SoulshardsFlightRestricted}");
 		Core.Log.LogInfo($"ItemDropLifetime: {ItemDropLifetime}");
 		Core.Log.LogInfo($"ItemDropLifetimeWhenDisabled: {ItemDropLifetimeWhenDisabled}");
