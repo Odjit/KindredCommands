@@ -252,15 +252,10 @@ internal class ConfigSettingsService
 	/// Adds/updates record in <see cref="BloodBound"/>.
 	/// Saves current config to a file.
 	/// </summary>
-	/// <param name="id">Record key.</param>
+	/// <param name="key">Record key.</param>
 	/// <param name="value">Record value.</param>
-	public void SetBloodBound(PrefabGUID id, bool value)
+	public void SetBloodBound(string key, bool value)
 	{
-		if (!Core.PrefabCollectionSystem.PrefabGuidToNameDictionary.TryGetValue(id, out string key))
-		{
-			key = id.GuidHash.ToString();
-		}
-
 		config.BloodBound[key] = value;
 		SaveConfig();
 	}

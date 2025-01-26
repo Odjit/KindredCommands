@@ -12,25 +12,18 @@ public static class BloodBoundCommands
 	/// Adds an entity to blood-bound category.
 	/// </summary>
 	/// <param name="ctx">Command context.</param>
-	/// <param name="descriptor">Command parameter. See <see cref="ItemDescriptorConverter"/>.</param>
+	/// <param name="descriptor">Command parameter. See <see cref="BloodBoundItemParameterConverter"/>.</param>
 	[Command("add", "a", "<Prefab GUID or name>", description: "Adds Blood-Bound attribute to items", adminOnly: true)]
-	public static void AddBloodBound(ChatCommandContext ctx, ItemDescriptor descriptor)
+	public static void AddBloodBound(ChatCommandContext ctx, BloodBoundItemParameter descriptor)
 	{
-		if (!descriptor.IsValid)
+		if (Core.BloodBoundService.SetBloodBound(descriptor.Prefab, descriptor.Entity, true))
 		{
-			ctx.Reply($"{descriptor.Input} not found.");
+			Core.ConfigSettings.SetBloodBound(descriptor.Name, true);
+			ctx.Reply($"Added Blood-Bound attribute to {descriptor.Name}");
 		}
 		else
 		{
-			if (Core.BloodBoundService.SetBloodBound(descriptor.Prefab, descriptor.Entity, true))
-			{
-				Core.ConfigSettings.SetBloodBound(descriptor.Prefab, true);
-				ctx.Reply($"Added Blood-Bound attribute to {descriptor.Input}");
-			}
-			else
-			{
-				ctx.Reply($"{descriptor.Input} is Blood-Bound already.");
-			}
+			ctx.Reply($"{descriptor.Name} is Blood-Bound already.");
 		}
 	}
 
@@ -38,25 +31,18 @@ public static class BloodBoundCommands
 	/// Removes an entity from blood-bound category.
 	/// </summary>
 	/// <param name="ctx">Command context.</param>
-	/// <param name="descriptor">Command parameter. See <see cref="ItemDescriptorConverter"/>.</param>
+	/// <param name="descriptor">Command parameter. See <see cref="BloodBoundItemParameterConverter"/>.</param>
 	[Command("remove", "r", "<Prefab GUID or name>", description: "Removes Blood-Bound attribute from items", adminOnly: true)]
-	public static void RemoveBloodBound(ChatCommandContext ctx, ItemDescriptor descriptor)
+	public static void RemoveBloodBound(ChatCommandContext ctx, BloodBoundItemParameter descriptor)
 	{
-		if (!descriptor.IsValid)
+		if (Core.BloodBoundService.SetBloodBound(descriptor.Prefab, false))
 		{
-			ctx.Reply($"{descriptor.Input} not found.");
+			Core.ConfigSettings.SetBloodBound(descriptor.Name, false);
+			ctx.Reply($"Removed Blood-Bound attribute from {descriptor.Name}");
 		}
 		else
 		{
-			if (Core.BloodBoundService.SetBloodBound(descriptor.Prefab, false))
-			{
-				Core.ConfigSettings.SetBloodBound(descriptor.Prefab, false);
-				ctx.Reply($"Removed Blood-Bound attribute from {descriptor.Input}");
-			}
-			else
-			{
-				ctx.Reply($"{descriptor.Input} isn't Blood-Bound already.");
-			}
+			ctx.Reply($"{descriptor.Name} isn't Blood-Bound already.");
 		}
 	}
 }
