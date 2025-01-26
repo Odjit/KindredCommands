@@ -284,7 +284,7 @@ internal class ConfigSettingsService
 	{
 		public Config()
 		{
-			BloodBound = new Dictionary<string, bool>();
+			BloodBound = [];
 			SoulshardsRestricted = true;
 			ItemDropLifetimeWhenDisabled = 300;
 			ShardDropLimit = 1;
