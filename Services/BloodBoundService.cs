@@ -22,7 +22,7 @@ public class BloodBoundService
 	/// Updates category for every entity in <paramref name="bloodBound"/>.
 	/// </summary>
 	/// <param name="bloodBound">Key: prefab guid, Value: indicates if entity belongs to blood-bound category.</param>
-	public void SetBloodBound(IReadOnlyDictionary<string, bool> bloodBound)
+	void SetBloodBoundAtStartup(IReadOnlyDictionary<string, bool> bloodBound)
 	{
 		var defaultValues = new List<string>();
 		foreach ((string key, bool value) in bloodBound)
