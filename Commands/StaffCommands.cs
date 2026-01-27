@@ -16,7 +16,7 @@ internal class StaffCommands
 	[Command("staff", description: "Shows online Staff members.", adminOnly: false)]
 	public static void WhoIsOnline(ChatCommandContext ctx)
 	{
-		var users = PlayerService.GetUsersOnline();
+		var users = Core.Players.GetUsersOnline();
 		var staff = Database.GetStaff();
 
 		StringBuilder builder = new();
