@@ -87,7 +87,7 @@ namespace KindredCommands.Services
 
 			if (immaterialPlayers.Contains(charEntity))
 			{
-				Buffs.AddBuff(userEntity, charEntity, Prefabs.AB_Blood_BloodRite_Immaterial, -1, true);
+				Buffs.TryAddBuff(userEntity, charEntity, Prefabs.AB_Blood_BloodRite_Immaterial, -1, true);
 				if (BuffUtility.TryGetBuff(Core.EntityManager, charEntity, Prefabs.AB_Blood_BloodRite_Immaterial, out Entity immaterialBuffEntity))
 				{
 					var modifyMovementSpeedBuff = immaterialBuffEntity.Read<ModifyMovementSpeedBuff>();
@@ -102,7 +102,7 @@ namespace KindredCommands.Services
 
 			if (shroudedPlayers.Contains(charEntity))
 			{
-				Buffs.AddBuff(userEntity, charEntity, Prefabs.EquipBuff_ShroudOfTheForest, -1, true);
+				Buffs.TryAddBuff(userEntity, charEntity, Prefabs.EquipBuff_ShroudOfTheForest, -1, true);
 			}
 			else
 			{
@@ -123,8 +123,8 @@ namespace KindredCommands.Services
 			while (BuffUtility.HasBuff(Core.EntityManager, charEntity, Prefabs.BoostedBuff2))
 				yield return null;
 
-			Buffs.AddBuff(userEntity, charEntity, Prefabs.BoostedBuff1, -1, true);
-			Buffs.AddBuff(userEntity, charEntity, Prefabs.BoostedBuff2, -1, true);
+			Buffs.TryAddBuff(userEntity, charEntity, Prefabs.BoostedBuff1, -1, true);
+			Buffs.TryAddBuff(userEntity, charEntity, Prefabs.BoostedBuff2, -1, true);
 
 			if (BuffUtility.TryGetBuff(Core.EntityManager, charEntity, Prefabs.BoostedBuff1, out var buffEntity))
 			{
@@ -422,7 +422,7 @@ namespace KindredCommands.Services
 			while(BuffUtility.HasBuff(Core.EntityManager, charEntity, buffPrefab))
 				yield return null;
 			if(IsPlayerShrouded(charEntity))
-				Buffs.AddBuff(charEntity.Read<PlayerCharacter>().UserEntity, charEntity, buffPrefab, -1, true);
+				Buffs.TryAddBuff(charEntity.Read<PlayerCharacter>().UserEntity, charEntity, buffPrefab, -1, true);
 		}
 
 		public bool IsPlayerShrouded(Entity charEntity)

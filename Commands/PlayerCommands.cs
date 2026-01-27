@@ -430,7 +430,7 @@ public static class PlayerCommands
 	[Command("staydown", description: "Downs the target player until they get revived- respawns will not get them up.", adminOnly: true)]
 	public static void PermDownPlayer(ChatCommandContext ctx, FoundPlayer player)
 	{
-		Buffs.AddBuff(player.Value.UserEntity, player.Value.CharEntity, new PrefabGUID(-1992158531), -1, true);
+		Buffs.TryAddBuff(player.Value.UserEntity, player.Value.CharEntity, new PrefabGUID(-1992158531), -1, true);
 		ctx.Reply($"Downed {player.Value.CharacterName}");
 	}
 

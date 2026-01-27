@@ -110,6 +110,36 @@ internal class PlayerService
 
 		return true;
 	}
+
+	public IEnumerable<Entity> GetPlayerCharacters(bool onlineOnly)
+	{
+		foreach (var playerData in FindPlayers(onlineOnly: onlineOnly, requiresCharacter: true))
+		{
+			yield return playerData.CharEntity;
+		}
+	}
+
+	public IEnumerable<PlayerData> FindPlayers(bool onlineOnly = false, bool requiresCharacter = false)
+	{
+		var entityQueryBuilder = new EntityQueryBuilder(Allocator.Temp)
+			.AddAll(new(Il2CppType.Of<User>(), ComponentType.AccessMode.ReadOnly));
+		var query = Core.EntityManager.CreateEntityQuery(ref entityQueryBuilder);
+		var entities = query.ToEntityArray(Allocator.Temp);
+		var userDatas = query.ToComponentDataArray<User>(Allocator.Temp);
+		for (var i = 0; i < entities.Length; i++)
+		{
+			var userData = userDatas[i];
+			bool matchesOnlineStatus = !onlineOnly || userData.IsConnected;
+			bool matchesCharacterStatus = !requiresCharacter || !userData.LocalCharacter._Entity.Equals(Entity.Null);			
+			if (matchesOnlineStatus && matchesCharacterStatus)
+			{
+				yield return new PlayerData(userData.CharacterName, userData.PlatformId, userData.IsConnected, entities[i], userData.LocalCharacter._Entity);
+			}
+		}
+		entities.Dispose();
+		userDatas.Dispose();
+	}
+
 	public static IEnumerable<Entity> GetUsersOnline()
 	{
 		var entityQueryBuilder = new EntityQueryBuilder(Allocator.Temp)

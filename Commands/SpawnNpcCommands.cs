@@ -54,7 +54,7 @@ internal static class SpawnCommands
 			{
 				if (level > 0)
 				{
-					Buffs.AddBuff(ctx.Event.SenderUserEntity, e, Prefabs.BoostedBuff1, -1, true);
+					Buffs.TryAddBuff(ctx.Event.SenderUserEntity, e, Prefabs.BoostedBuff1, -1, true);
 					if (BuffUtility.TryGetBuff(Core.EntityManager, e, Prefabs.BoostedBuff1, out var buffEntity))
 					{
 						buffEntity.Remove<SpawnStructure_WeakenState_DataShared>();
@@ -111,35 +111,35 @@ internal static class SpawnCommands
 				switch (type)
 				{
 					case BloodType.Brute:
-						Buffs.AddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Brute, -1, true);
+						Buffs.TryAddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Brute, -1, true);
 						break;
 					case BloodType.Creature:
-						Buffs.AddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Creature, -1, true);
+						Buffs.TryAddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Creature, -1, true);
 						break;
 					case BloodType.Draculin:
-						Buffs.AddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Draculin, -1, true);
+						Buffs.TryAddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Draculin, -1, true);
 						break;
 					case BloodType.Mutant:
-						Buffs.AddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Mutant, -1, true);
+						Buffs.TryAddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Mutant, -1, true);
 						break;
 					case BloodType.Rogue:
-						Buffs.AddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Rogue, -1, true);
+						Buffs.TryAddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Rogue, -1, true);
 						break;
 					case BloodType.Scholar:
-						Buffs.AddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Scholar, -1, true);
+						Buffs.TryAddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Scholar, -1, true);
 						break;
 					case BloodType.Warrior:
-						Buffs.AddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Warrior, -1, true);
+						Buffs.TryAddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Warrior, -1, true);
 						break;
 					case BloodType.Worker:
-						Buffs.AddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Worker, -1, true);
+						Buffs.TryAddBuff(ctx.Event.SenderUserEntity, e, Prefabs.AB_BloodQualityUnitBuff_Worker, -1, true);
 						break;
 				}
 			}
 
 			if (level > 0)
 			{
-				Buffs.AddBuff(ctx.Event.SenderUserEntity, e, Prefabs.BoostedBuff1, -1, true);
+				Buffs.TryAddBuff(ctx.Event.SenderUserEntity, e, Prefabs.BoostedBuff1, -1, true);
 				if (BuffUtility.TryGetBuff(Core.EntityManager, e, Prefabs.BoostedBuff1, out var buffEntity))
 				{
 					buffEntity.Remove<SpawnStructure_WeakenState_DataShared>();

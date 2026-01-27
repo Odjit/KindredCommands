@@ -77,7 +77,7 @@ internal class GodCommands
 		else
 		{
 
-			Buffs.AddBuff(userEntity, charEntity, Prefabs.Admin_Observe_Invisible_Buff, -1);
+			Buffs.TryAddBuff(userEntity, charEntity, Prefabs.Admin_Observe_Invisible_Buff, -1);
 			positionBeforeSpectate.Add(name.ToString(), charEntity.Read<Translation>().Value);
 			ctx.Reply($"<color=yellow>Spectate</color> added to <color=white>{name}</color>");
 		}

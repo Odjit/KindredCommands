@@ -12,7 +12,7 @@ internal class AFKCommands
 		//"AB_Bear_FallAsleep_SleepingIdle_Buff": -883762685 - gives the ZZzzz animation and locks player in place, spells still work
 		if (!BuffUtility.TryGetBuff(Core.EntityManager, ctx.Event.SenderCharacterEntity, Prefabs.AB_Bear_FallAsleep_SleepingIdle_Buff, out var buffEntity))
 		{
-			Buffs.AddBuff(ctx.Event.SenderUserEntity, ctx.Event.SenderCharacterEntity, Prefabs.AB_Bear_FallAsleep_SleepingIdle_Buff, -1, false);
+			Buffs.TryAddBuff(ctx.Event.SenderUserEntity, ctx.Event.SenderCharacterEntity, Prefabs.AB_Bear_FallAsleep_SleepingIdle_Buff, -1, false);
 			ctx.Reply("You are now AFK!");
 		}
 		else

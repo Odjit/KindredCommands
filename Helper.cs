@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Il2CppInterop.Runtime;
 using Il2CppSystem;
 using KindredCommands.Data;
+using KindredCommands.Models;
 using ProjectM;
 using ProjectM.CastleBuilding;
 using ProjectM.Gameplay.Clan;
@@ -65,6 +66,58 @@ internal static partial class Helper
 			Core.LogException(e);
 		}
 		return new Entity();
+	}
+
+	public static int AddBloodPotionToInventory(Entity recipient, BloodType type = BloodType.Frailed, float quality = 100f, int quantity = 1)
+	{
+		var countAdded = 0;
+		while (countAdded < quantity)
+		{
+			Entity addedItemEntity = AddItemToInventory(recipient, new PrefabGUID(1223264867), 1);
+			if (addedItemEntity == Entity.Null)
+			{
+				break;
+			}
+
+			var blood = new StoredBlood()
+			{
+				BloodQuality = quality,
+				PrimaryBloodType = new PrefabGUID((int)type)
+			};
+
+			Core.EntityManager.SetComponentData(addedItemEntity, blood);
+			countAdded++;
+		}
+		return countAdded;
+	}
+
+	public static int AddBloodMerlotMixToInventory(Entity recipient, BloodType primaryType = BloodType.Frailed, float primaryQuality = 100f, BloodType secondaryType = BloodType.Frailed, float secondaryQuality = 100f, int secondaryTrait = 1, int quantity = 1)
+	{
+		var countAdded = 0;
+		while (countAdded < quantity)
+		{
+			Entity addedItemEntity = AddItemToInventory(recipient, new PrefabGUID(1223264867), 1);
+			if (addedItemEntity == Entity.Null)
+			{
+				break;
+			}
+
+			var blood = new StoredBlood()
+			{
+				BloodQuality = primaryQuality,
+				PrimaryBloodType = new PrefabGUID((int)primaryType),
+				SecondaryBlood = new()
+				{
+					Quality = secondaryQuality,
+					Type = new PrefabGUID((int)secondaryType),
+					BuffIndex = (byte)(secondaryTrait - 1)
+				}
+			};
+
+			Core.EntityManager.SetComponentData(addedItemEntity, blood);
+			countAdded++;
+		}
+		return countAdded;
 	}
 
 	public static NativeArray<Entity> GetEntitiesByComponentType<T1>(bool includeAll = false, bool includeDisabled = false, bool includeSpawn = false, bool includePrefab = false, bool includeDestroyed = false)
