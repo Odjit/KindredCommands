@@ -4,6 +4,7 @@ using KindredCommands.Services;
 using ProjectM;
 using ProjectM.Network;
 using Stunlock.Core;
+using Unity.Collections;
 using Unity.Entities;
 using VampireCommandFramework;
 
@@ -46,11 +47,11 @@ internal class BuffCommands
 	}
 
 	[Command("buffToAll", "buffAll", adminOnly: true)]
-	public static void BuffToAllOnlinePlayersCommand(ChatCommandContext ctx, BuffInput buff, int duration = 0, bool immortal = false)
+	public static void BuffToAllOnlinePlayersCommand(ChatCommandContext ctx, BuffInput buff, int duration = 0, bool immortal = false, bool includeOffline = false)
 	{
 		int totalCount = 0;
 		int successCount = 0;
-		foreach (var playerData in Core.Players.FindPlayers(onlineOnly: true, requiresCharacter: true))
+		foreach (var playerData in Core.Players.FindPlayers(onlineOnly: !includeOffline, requiresCharacter: true))
 		{
 			totalCount++;
 			try
@@ -63,7 +64,10 @@ internal class BuffCommands
 				Core.Log.LogError(ex);
 			}
 		}
-		ctx.Reply($"Applied the buff {buff.Name} to {successCount}/{totalCount} online players.");
+		var targetDesc = includeOffline ? "players" : "online players";
+		ctx.Reply($"Applied the buff {buff.Name} to {successCount}/{totalCount} {targetDesc}.");
+		FixedString512Bytes message = $"All players received the buff {buff.Name}";
+		ServerChatUtils.SendSystemMessageToAllClients(Core.EntityManager, ref message);
 	}
 
 	[Command("debuff", adminOnly: true)]
@@ -75,11 +79,11 @@ internal class BuffCommands
 	}
 
 	[Command("debuffToAll", "debuffAll", adminOnly: true)]
-	public static void DebuffToAllPlayersCommand(ChatCommandContext ctx, BuffInput buff)
+	public static void DebuffToAllPlayersCommand(ChatCommandContext ctx, BuffInput buff, bool includeOffline = false)
 	{
 		int totalCount = 0;
 		int successCount = 0;
-		foreach (var characterEntity in Core.Players.GetPlayerCharacters(onlineOnly: false))
+		foreach (var characterEntity in Core.Players.GetPlayerCharacters(onlineOnly: !includeOffline))
 		{
 			totalCount++;
 			try
@@ -92,7 +96,10 @@ internal class BuffCommands
 				Core.Log.LogError(ex);
 			}
 		}
-		ctx.Reply($"Removed the buff {buff.Name} from {successCount}/{totalCount} players.");
+		var targetDesc = includeOffline ? "players" : "online players";
+		ctx.Reply($"Removed the buff {buff.Name} from {successCount}/{totalCount} {targetDesc}.");
+		FixedString512Bytes message = $"The buff {buff.Name} has been removed from all players";
+		ServerChatUtils.SendSystemMessageToAllClients(Core.EntityManager, ref message);
 	}
 
 	[Command("listbuffs", description: "Lists the buffs a player has", adminOnly: true)]
