@@ -24,13 +24,13 @@ internal static class BloodCommands
 		}
 	}
 
-	[Command("bloodpotionToAll", null, description: "Gives a potion to all players, with specified Blood Type, Quality, and amount", adminOnly: true)]
+	[Command("bloodpotionToAll", null, description: "Gives a potion to all players, with specified Blood Type, Quality, and amount. Drops items at player's feet if inventory is full.", adminOnly: true)]
 	public static void GiveBloodPotionToAllPlayersCommand(ChatCommandContext ctx, BloodType type = BloodType.Frailed, float quality = 100f, int quantity = 1, bool includeOffline = false)
 	{
 		quality = Mathf.Clamp(quality, 0, 100);
 		foreach (var characterEntity in Core.Players.GetPlayerCharacters(onlineOnly: !includeOffline))
 		{
-			Helper.AddBloodPotionToInventory(characterEntity, type, quality, quantity);
+			Helper.AddBloodPotionToInventoryOrDrop(characterEntity, type, quality, quantity);
 		}
 		var targetDesc = includeOffline ? "all players" : "all online players";
 		ctx.Reply($"Gave to {targetDesc}: <color=#ff0>{quantity}</color> Blood Merlot of <color=#ff0>{type}</color> type of <color=#ff0>{quality}</color>% quality");
@@ -53,7 +53,7 @@ internal static class BloodCommands
 		}
 	}
 
-	[Command("bloodpotionmixToAll", null, description: "Gives a potion to all players, with two specified Blood Types, Qualities, secondary trait option and amount", adminOnly: true)]
+	[Command("bloodpotionmixToAll", null, description: "Gives a potion to all players, with two specified Blood Types, Qualities, secondary trait option and amount. Drops items at player's feet if inventory is full.", adminOnly: true)]
 	public static void GiveBloodMerlotToAllPlayersCommand(ChatCommandContext ctx, BloodType primaryType = BloodType.Frailed, float primaryQuality = 100f, BloodType secondaryType = BloodType.Frailed, float secondaryQuality = 100f, int secondaryTrait = 1, int quantity = 1, bool includeOffline = false)
 	{
 		primaryQuality = Mathf.Clamp(primaryQuality, 0, 100);
@@ -61,7 +61,7 @@ internal static class BloodCommands
 		secondaryTrait = Mathf.Clamp(secondaryTrait, 1, 3);
 		foreach (var characterEntity in Core.Players.GetPlayerCharacters(onlineOnly: !includeOffline))
 		{
-			Helper.AddBloodMerlotMixToInventory(characterEntity, primaryType, primaryQuality, secondaryType, secondaryQuality, secondaryTrait, quantity);
+			Helper.AddBloodMerlotMixToInventoryOrDrop(characterEntity, primaryType, primaryQuality, secondaryType, secondaryQuality, secondaryTrait, quantity);
 		}
 		var targetDesc = includeOffline ? "all players" : "all online players";
 		ctx.Reply($"Gave to {targetDesc}: <color=#ff0>{quantity}</color> Blood Merlot of <color=#ff0>{primaryType}</color> type of <color=#ff0>{primaryQuality}</color>% quality " +

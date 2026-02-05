@@ -17,12 +17,12 @@ internal class GiveItemCommands
 		ctx.Reply($"Gave {quantity} {name}");
 	}
 
-	[Command("giveToAll", null, "<Prefab GUID or name> [quantity=1] [includeOffline=false]", "Gives the specified item to all players", adminOnly: true)]
+	[Command("giveToAll", null, "<Prefab GUID or name> [quantity=1] [includeOffline=false]", "Gives the specified item to all players. Drops items at player's feet if inventory is full.", adminOnly: true)]
 	public static void GiveItemToAllPlayers(ChatCommandContext ctx, ItemParameter item, int quantity = 1, bool includeOffline = false)
 	{
 		foreach (var characterEntity in Core.Players.GetPlayerCharacters(onlineOnly: !includeOffline))
 		{
-			Helper.AddItemToInventory(characterEntity, item.Value, quantity);
+			Helper.AddItemToInventoryOrDrop(characterEntity, item.Value, quantity);
 		}
 		var prefabSys = Core.Server.GetExistingSystemManaged<PrefabCollectionSystem>();
 		var name = prefabSys._PrefabLookupMap.GetName(item.Value);

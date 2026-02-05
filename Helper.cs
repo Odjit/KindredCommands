@@ -68,6 +68,152 @@ internal static partial class Helper
 		return new Entity();
 	}
 
+	public static int AddItemToInventoryOrDrop(Entity characterEntity, PrefabGUID guid, int amount)
+	{
+		try
+		{
+			ServerGameManager serverGameManager = Core.Server.GetExistingSystemManaged<ServerScriptMapper>()._ServerGameManager;
+			var inventoryResponse = serverGameManager.TryAddInventoryItem(characterEntity, guid, amount);
+
+			if (inventoryResponse.RemainingAmount > 0)
+			{
+				var position = characterEntity.Read<Translation>().Value;
+				DropItemNearPosition(position, guid, inventoryResponse.RemainingAmount);
+			}
+
+			return amount - inventoryResponse.RemainingAmount;
+		}
+		catch (System.Exception e)
+		{
+			Core.LogException(e);
+		}
+		return 0;
+	}
+
+	public static void DropItemNearPosition(float3 position, PrefabGUID itemPrefab, int quantity)
+	{
+		var entityManager = Core.EntityManager;
+		try
+		{
+			var proxy = entityManager.CreateEntity(ComponentType.ReadWrite<Translation>());
+			proxy.Write(new Translation { Value = position });
+			try
+			{
+				InventoryUtilitiesServer.CreateDropItem(entityManager, proxy, itemPrefab, quantity, Entity.Null);
+			}
+			finally
+			{
+				DestroyUtility.Destroy(entityManager, proxy);
+			}
+		}
+		catch (System.Exception ex)
+		{
+			Core.LogException(ex);
+		}
+	}
+
+	static readonly PrefabGUID BloodMerlotPrefab = new(1223264867);
+
+	public static void DropBloodMerlotNearPosition(float3 position, BloodType type, float quality, int quantity)
+	{
+		var entityManager = Core.EntityManager;
+		try
+		{
+			var gameDataSystem = Core.Server.GetExistingSystemManaged<GameDataSystem>();
+			var itemDataLookup = gameDataSystem.ItemHashLookupMap;
+
+			if (!itemDataLookup.TryGetValue(BloodMerlotPrefab, out var itemData))
+			{
+				Core.Log.LogWarning($"Could not find ItemData for BloodMerlot prefab");
+				return;
+			}
+
+			var itemEntity = itemData.Entity;
+			if (!itemEntity.Has<StoredBlood>())
+			{
+				itemEntity.Add<StoredBlood>();
+			}
+
+			var storedBlood = new StoredBlood
+			{
+				BloodQuality = quality,
+				PrimaryBloodType = new PrefabGUID((int)type)
+			};
+			entityManager.SetComponentData(itemEntity, storedBlood);
+
+			var proxy = entityManager.CreateEntity(ComponentType.ReadWrite<Translation>());
+			proxy.Write(new Translation { Value = position });
+			try
+			{
+				for (int i = 0; i < quantity; i++)
+				{
+					InventoryUtilitiesServer.CreateDropItem(entityManager, proxy, BloodMerlotPrefab, 1, Entity.Null);
+				}
+			}
+			finally
+			{
+				DestroyUtility.Destroy(entityManager, proxy);
+			}
+		}
+		catch (System.Exception ex)
+		{
+			Core.LogException(ex);
+		}
+	}
+
+	public static void DropBloodMerlotMixNearPosition(float3 position, BloodType primaryType, float primaryQuality, BloodType secondaryType, float secondaryQuality, int secondaryTrait, int quantity)
+	{
+		var entityManager = Core.EntityManager;
+		try
+		{
+			var gameDataSystem = Core.Server.GetExistingSystemManaged<GameDataSystem>();
+			var itemDataLookup = gameDataSystem.ItemHashLookupMap;
+
+			if (!itemDataLookup.TryGetValue(BloodMerlotPrefab, out var itemData))
+			{
+				Core.Log.LogWarning($"Could not find ItemData for BloodMerlot prefab");
+				return;
+			}
+
+			var itemEntity = itemData.Entity;
+			if (!itemEntity.Has<StoredBlood>())
+			{
+				itemEntity.Add<StoredBlood>();
+			}
+
+			var storedBlood = new StoredBlood
+			{
+				BloodQuality = primaryQuality,
+				PrimaryBloodType = new PrefabGUID((int)primaryType),
+				SecondaryBlood = new()
+				{
+					Quality = secondaryQuality,
+					Type = new PrefabGUID((int)secondaryType),
+					BuffIndex = (byte)(secondaryTrait - 1)
+				}
+			};
+			entityManager.SetComponentData(itemEntity, storedBlood);
+
+			var proxy = entityManager.CreateEntity(ComponentType.ReadWrite<Translation>());
+			proxy.Write(new Translation { Value = position });
+			try
+			{
+				for (int i = 0; i < quantity; i++)
+				{
+					InventoryUtilitiesServer.CreateDropItem(entityManager, proxy, BloodMerlotPrefab, 1, Entity.Null);
+				}
+			}
+			finally
+			{
+				DestroyUtility.Destroy(entityManager, proxy);
+			}
+		}
+		catch (System.Exception ex)
+		{
+			Core.LogException(ex);
+		}
+	}
+
 	public static int AddBloodPotionToInventory(Entity recipient, BloodType type = BloodType.Frailed, float quality = 100f, int quantity = 1)
 	{
 		var countAdded = 0;
@@ -89,6 +235,17 @@ internal static partial class Helper
 			countAdded++;
 		}
 		return countAdded;
+	}
+
+	public static void AddBloodPotionToInventoryOrDrop(Entity characterEntity, BloodType type, float quality, int quantity)
+	{
+		var countAdded = AddBloodPotionToInventory(characterEntity, type, quality, quantity);
+		var remaining = quantity - countAdded;
+		if (remaining > 0)
+		{
+			var position = characterEntity.Read<Translation>().Value;
+			DropBloodMerlotNearPosition(position, type, quality, remaining);
+		}
 	}
 
 	public static int AddBloodMerlotMixToInventory(Entity recipient, BloodType primaryType = BloodType.Frailed, float primaryQuality = 100f, BloodType secondaryType = BloodType.Frailed, float secondaryQuality = 100f, int secondaryTrait = 1, int quantity = 1)
@@ -118,6 +275,17 @@ internal static partial class Helper
 			countAdded++;
 		}
 		return countAdded;
+	}
+
+	public static void AddBloodMerlotMixToInventoryOrDrop(Entity characterEntity, BloodType primaryType, float primaryQuality, BloodType secondaryType, float secondaryQuality, int secondaryTrait, int quantity)
+	{
+		var countAdded = AddBloodMerlotMixToInventory(characterEntity, primaryType, primaryQuality, secondaryType, secondaryQuality, secondaryTrait, quantity);
+		var remaining = quantity - countAdded;
+		if (remaining > 0)
+		{
+			var position = characterEntity.Read<Translation>().Value;
+			DropBloodMerlotMixNearPosition(position, primaryType, primaryQuality, secondaryType, secondaryQuality, secondaryTrait, remaining);
+		}
 	}
 
 	public static NativeArray<Entity> GetEntitiesByComponentType<T1>(bool includeAll = false, bool includeDisabled = false, bool includeSpawn = false, bool includePrefab = false, bool includeDestroyed = false)
