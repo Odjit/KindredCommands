@@ -69,6 +69,18 @@ namespace KindredCommands.Services
 				return;
 			}
 
+			Core.StartCoroutine(BuffBoostedPlayer(charEntity));
+		}
+
+		IEnumerator BuffBoostedPlayer(Entity charEntity)
+		{
+			Buffs.RemoveBuff(charEntity, Prefabs.BoostedBuff1);
+			Buffs.RemoveBuff(charEntity, Prefabs.BoostedBuff2);
+			while (BuffUtility.HasBuff(Core.EntityManager, charEntity, Prefabs.BoostedBuff1))
+				yield return null;
+			while (BuffUtility.HasBuff(Core.EntityManager, charEntity, Prefabs.BoostedBuff2))
+				yield return null;
+
 			if (charEntity.Has<VampireAttributeCaps>() && ShouldRemoveCaps(charEntity)) charEntity.Remove<VampireAttributeCaps>();
 
 			var userEntity = charEntity.Read<PlayerCharacter>().UserEntity;
@@ -110,18 +122,6 @@ namespace KindredCommands.Services
 				if (!equipment.IsEquipped(Prefabs.Item_Cloak_Main_ShroudOfTheForest, out var _))
 					Buffs.RemoveBuff(charEntity, Prefabs.EquipBuff_ShroudOfTheForest);
 			}
-
-			Core.StartCoroutine(RemoveAndAddCustomBuff(userEntity, charEntity));
-		}
-
-		IEnumerator RemoveAndAddCustomBuff(Entity userEntity, Entity charEntity)
-		{
-			Buffs.RemoveBuff(charEntity, Prefabs.BoostedBuff1);
-			Buffs.RemoveBuff(charEntity, Prefabs.BoostedBuff2);
-			while (BuffUtility.HasBuff(Core.EntityManager, charEntity, Prefabs.BoostedBuff1))
-				yield return null;
-			while (BuffUtility.HasBuff(Core.EntityManager, charEntity, Prefabs.BoostedBuff2))
-				yield return null;
 
 			Buffs.TryAddBuff(userEntity, charEntity, Prefabs.BoostedBuff1, -1, true);
 			Buffs.TryAddBuff(userEntity, charEntity, Prefabs.BoostedBuff2, -1, true);
