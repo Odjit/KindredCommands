@@ -1,7 +1,7 @@
 ![](logo.png)
 # KindredCommands for V Rising
 
-KindredCommands is a server modification for V Rising that adds chat commands for server administration. 
+KindredCommands is a server modification for V Rising that adds chat commands for server administration.
 
 Feel free to reach out to me on Discord (odjit) if you have any questions or need help with the mod.
 **Note:** Dependencies are not working while we are in a test period. Please refer to the **Installation** section for more information.
@@ -13,12 +13,10 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
 ### Administration Commands
 - `.toggleadmin (player)`
   - will add or remove a player from the admin list, authing and deauthing
-- `.reloadadmin `
+- `.reloadadmin`
   - will reload the admin list
-- `autoadminauth`
-  - will toggle auto admin auth for the server. If enabled, players who are in the admin list will automatically be authenticated upon joining.
-- `.stealthadmin`
-  - will toggle stealth mode for the user as admin. This will enable you to still use all chat admin commands, but your name not go green. You cannnot adminauth or you will show as green again. Will persist through relog. You will get kicked, don't freak.
+- `.autoadminauth`
+  - will add or remove yourself from the auto AdminAuth list. If on the list, you will automatically be admin authenticated upon joining.
 - `.reloadstaff`
   - reloads the staff list config file
 - `.setstaff (Player) (Rank)`
@@ -32,7 +30,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Shortcut: *.wai*
 - `.unbindplayer (Name)`
   - Unbinds a steamID from a character. Useful for "deleting" a character. Old body, name, territory etc will still exist, but the character will be unplayable. Kicks affected player. When they log back, they will be prompted to create a new character.
-  - Example:: *.unbindplayer Bob*
+  - Example: *.unbindplayer Bob*
 - `.swapplayers (Name1) (Name2)`
   - Swaps steamIDs between two characters. Useful for "changing" a character. You can swap two active players, or swap back into a previously unbound body. Kicks affected players.
   - Example: *.swapplayers Bob Joe*
@@ -46,7 +44,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - will assign a steamID to a character.
   - Example: *.assignsteamID Bob 1234567890*
   - Shortcut: *.asid*
-- `.longestofflinecastles`
+- `.longestofflinecastles (page)`
   - will list all of the players who have been offline the longest and still have castles.
   - Shortcut: *.loc*
 - `.settime (day) (hour)`
@@ -57,7 +55,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
 - `.bloodbound add (Item prefab name)`
   - will add Blood-Bound attribute to an item. Saves out to config file to persist through restarts. Note: Attribute won't be displayed on client side since it remains unmodded.
   - Example: *.bloodbound add Item_Ingredient_Crystal*
-  - Shortcut: *.blb a -257494203*	
+  - Shortcut: *.blb a -257494203*
 - `.bloodbound remove (Item prefab name)`
   - will remove Blood-Bound attribute from an item. Saves out to config file to persist through restarts. Note: Attribute will be still displayed on client side since it remains unmodded.
   - Example: *.bloodbound remove Item_Ingredient_Crystal*
@@ -79,19 +77,19 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Example: *.gear soulshardlimit 5 Dracula*
   - Shortcut: *.gear ssl*
 - `.gear soulsharddurability (amount) (player)`
-  - will set the durability of all soulshards in the player's inventory to the amount specified. 
+  - will set the durability of all soulshards in the player's inventory to the amount specified.
   - Example: *.gear soulsharddurability 2500 Bob*
   - Shortcut: *.gear ssd*
-- `.gear soulshardurabilitytime (seconds)`
-  - How many seconds will soulshards last before they break. Do not enter anything for seconds if you want default behavior.  
-  - Example: *.gear soulshardurabilitytime 60*
+- `.gear soulsharddurabilitytime (seconds)`
+  - How many seconds will soulshards last before they break. Do not enter anything for seconds if you want default behavior.
+  - Example: *.gear soulsharddurabilitytime 60*
   - Shortcut: *.gear ssdt*
 - `.gear destroyallshards`
   - Will destroy all soul shards. Equipped, in inventories, on the ground, and in pedestals. All of them. Useful for completely resetting shards.
 
 ### Dropped Item Management Commands
 - `.dropitems lifetime (seconds)`
-  - will set the lifetime of dropped items while players are present to the seconds specified. Default is 300 seconds. This is a server wide setting, and will persist through restarts.Does not apply to shards or Player Containers.
+  - will set the lifetime of dropped items while players are present to the seconds specified. Default is 300 seconds. This is a server wide setting, and will persist through restarts. Does not apply to shards or Player Containers.
   - Example: *.dropitems lifetime 600*
   - Shortcut: *.dropitems lt*
 - `.dropitems removelifetime`
@@ -106,10 +104,10 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Example: *.dropitems clear 10*
   - Shortcut: *.dropitems c*
 - `.dropitems clearall`
-  - will clear all dropped items on the map. 
+  - will clear all dropped items on the map.
   - Shortcut: *.dropitems ca*
 - `.dropitems clearshards (radius)`
-  - Will clear all dropped shards in a radius around you. 
+  - Will clear all dropped shards in a radius around you.
   - Example: *.dropitems clearshards 10*
   - Shortcut: *.dropitems cs*
 - `.dropitems clearallshards`
@@ -118,7 +116,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
 - `.dropitems shardlifetime (seconds)`
   - Will set the lifetime of dropped shards. Default is 3600 seconds. This is a server wide setting, and will persist through restarts
   - Example: *.dropitems shardlifetime 600*
-  - shortcut: *.dropitems slt*
+  - Shortcut: *.dropitems slt*
 
 ### Announcement Commands
 - `.announce add (Name) (Message) (Time) (OneTime: True/False)`
@@ -147,7 +145,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - will give Merlot with two specified Blood Types, Qualities, secondary trait option and amount
   - Example: *.bpm warrior 100 creature 100 1 5*
   - Shortcut: *.bpm*
-- `.give (Item prefab name) (amount)`			
+- `.give (Item prefab name) (amount)`
   - Example: *.give Headgear_arcmageCrown 1*
   - Shortcut: *.g*
 - `.search item (name) (page #)`
@@ -156,7 +154,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Shortcut: *.search i*
 - `.search npc (name) (page #)`
   - Will respond with the item prefab name needed.
-  - Example: *.search item vblood*
+  - Example: *.search npc vblood*
   - Shortcut: *.search n*
 - `.spawnnpc (guid) (amount) (level)`
   - Spawns an npc specified at your location in the amount specified and at the level specified (if blank, will spawn at default level).
@@ -167,12 +165,12 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Example: *.customspawn CHAR_ChurchOfLight_Lightweaver scholar 100 true -1 100*
   - Shortcut: *.cspwn*
   - See .search npc above for prefab IDs
-- `.customspawnat (Prefab ID) (x) (y) (z) (BloodType) (BloodQuality) (Consumable: true/false) (duration) (level) `
+- `.customspawnat (Prefab ID) (x) (y) (z) (BloodType) (BloodQuality) (Consumable: true/false) (duration) (level)`
   - Spawns an npc at specified coordinates with specific blood type, quality, whether or not you can 'eat' it, how long it will be up, and at what level.
-  - Example: *.customspawnat CHAR_ChurchOfLight_Lightweaver 0 0 0 scholar 100 true -1 100 *
+  - Example: *.customspawnat CHAR_ChurchOfLight_Lightweaver 0 0 0 scholar 100 true -1 100*
   - Shortcut: *.cspwnat*
 - `.despawnnpc (guid) (range)`
-  - will kill any entity matching the ID specified. Use sparingly as this is an expensive call, and could cause minor lag depending. Just for the cases where you can't kill something by hand. 
+  - will kill any entity matching the ID specified within the range (default 25). Use sparingly as this is an expensive call, and could cause minor lag depending. Just for the cases where you can't kill something by hand.
   - Example: *.despawnnpc CHAR_ChurchOfLight_Lightweaver 10*
   - Shortcut: *.dspwn*
 - `.spawnban (Prefab GUID name) (reason)`
@@ -194,100 +192,98 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Removes a buff from a player named, or the user if no one is named. Will work on offline players.
   - Example: *.debuff 476186894 Bob*
 - `.listbuffs (Player)`
-  - will show all buffs on a player																								
+  - will show all buffs on a player
   - Example: *.listbuffs Bob*
 - `.resetcooldown (Player)`
-  - Resets all ability and skill cooldowns for the player		
+  - Resets all ability and skill cooldowns for the player
   - Example: *.resetcooldown Bob*
   - Shortcut: *.cd*
 - `.god (Player)`
-  - will toggle godmode on a player named, or the user if no one is named. Super speed, spells, damage, etc: Everything from boosts.																								
+  - will toggle godmode on a player named, or the user if no one is named. Super speed, spells, damage, etc: Everything from boosts.
   - Example: *.god Bob*
 - `.mortal (player)`
-  - will toggle godmode off a player named, or the user if no one is named.	Also removes boosts.																							
+  - will toggle godmode off a player named, or the user if no one is named. Also removes boosts.
   - Example: *.mortal Bob*
-- `.spectate (Player)`
-  - will set the player into spectate mode, where they are invisible and cannot interact with anything. Use again to remove it and teleport them to their prior position.
+- `.spectate (Player) (ReturnToStart: true/false)`
+  - will set the player into spectate mode, where they are invisible and cannot interact with anything. Use again to remove it and teleport them to their prior position (default true), or pass false to stay where they are.
   - Example: *.spectate Bob*
 - `.boost (Type) (Player)`
   - will boost a player with certain types: noaggro, noblooddrain, nocooldown, nodurability, immaterial, invincible, shrouded, fly, suninvulnerable, batvision. Remove via use of same command again as a toggle or use .mortal to strip all.
   - Example: *.boost immaterial Bob*
   - Shortcuts: *.boost (na, nb, nc, nd, i, inv, sh, f, suninv, bv)*
-- `.boost (Type) (Ammount) (Player)`
-  - will boost a player's stats to the amount specified. Types with amounts are the following: attackspeed, damage, health, speed, and yield. 																							
+- `.boost (Type) (Amount) (Player)`
+  - will boost a player's stats to the amount specified. Types with amounts are the following: attackspeed, damage, health, speed, and yield.
   - Example: *.boost damage 100 Bob*
   - Shortcut: *.boost (as, d, h, s, y)*
 - `.boost remove(Type) (Player)`
-  - will remove a boost from a player. Used for removing boosts that require an amount set.																							
+  - will remove a boost from a player. Used for removing boosts that require an amount set: removeattackspeed, removedamage, removehealth, removespeed, removeyield.
   - Example: *.boost removedamage Bob*
   - Shortcut: *.boost (ras, rd, rh, rs, ry)*
 - `.boost state (Player)`
-  - will list all boosts on a player.																							
+  - will list all boosts on a player.
   - Example: *.boost state Bob*
 - `.boost players`
   - provides a list of all boosted players
-- `.rename (Old Name) (New Name)`
-  - Renames a player. Original name will still show on map to clanmates.
-  - Example: *.rename Bob Joe*
+- `.rename (Player) (New Name)`
+  - Renames a player named, or the user if no one is named. Original name will still show on map to clanmates.
+  - Example: *.rename Bob Joe* or *.rename Joe*
 - `.revive (Player)`
   - will pick you up from being downed. If fully dead, sends player to coffin.
   - Example: *.revive Joe*
-- `.revivetarget (Player)`
+- `.revivetarget`
   - will revive the player you are hovering over.
-- `.pace`
-  - will match your movement speed to that of the closest NPC, allowing you to walk alongside them naturally. Use again to toggle back to normal speed.
 - `.gear [repair/break] (Player)`
   - will repair or break gear on a player (or self if no player specified)
   - Example: *.gear repair Joe* or *.gear break Joe*
   - Shortcut: *.gear r* or *.gear b*
 - `.gear [repair/break]all (range)`
-  - will repair or break all gear on players within the specified range.
+  - will repair or break all gear on players within the specified range (default 10).
   - Example: *.gear repairall 10* or *.gear breakall 10*
   - Shortcut: *.gear ra* or *.gear ba*
 - `.unlock (Player)`
-  - will complete a player's journal, vbloods, abilities, waypoints and the map. Does not unlock DLCs. (Thats naughty)
+  - will complete a player's journal, vbloods, abilities, waypoints and the map. Does not unlock DLCs. (That's naughty)
   - Example: *.unlock Bob*
 - `.fly (Player)`
-  - will toggle flying on a player named, or the user if no one is named.																								
+  - will toggle flying on a player named, or the user if no one is named.
   - Example: *.fly Bob*
 - `.flyup (Player)`
   - will move a player up in the air a level from the ground.
   - Example: *.flyup Bob*
   - Shortcut: *.f^*
 - `.flydown (Player)`
-  - will move a player down a level in the air.																								
-  - Example: *.flyup Bob*
+  - will move a player down a level in the air.
+  - Example: *.flydown Bob*
   - Shortcut: *.fv*
-- `.flylevel (Player) (Level)`
-  - will set a player's level to the flight level specified. Think of levels like floor heights.																								
-  - Example: *.flylevel Bob 5*
-- `.flyheight (Player) (Height)`
-  - will set a player's fly height to the height specified.																								
-  - Example: *.flyheight Bob 10*
-- `.flyobstacleheight (Player) (Height)`
-  - will set a player's fly obstacle height to the height specified. This is the amount of temporary height you gain when you collide into an obstacle.																								
-  - Example: *.flyobstacleheight Bob 10*
+- `.flylevel (Level) (Player)`
+  - will set the flight level specified on a player named, or the user if no one is named. Think of levels like floor heights.
+  - Example: *.flylevel 5 Bob*
+- `.flyheight (Height)`
+  - will set your fly height to the height specified.
+  - Example: *.flyheight 10*
+- `.flyobstacleheight (Height)`
+  - will set your fly obstacle height to the height specified. This is the amount of temporary height you gain when you collide into an obstacle.
+  - Example: *.flyobstacleheight 10*
 - `.teleport (x) (y) (z) (Player)`
-  - will teleport a player to the coordinates specified.																								
+  - will teleport a player to the coordinates specified.
   - Example: *.teleport 0 0 0 Bob*
 - `.killplayer (Player)`
-  - will kill a player.																								
+  - will kill a player.
   - Example: *.killplayer Bob*
 - `.staydown (Player)`
-  - will down a player and keep them down until they are revived - respawns will not get them up.																								
+  - will down a player and keep them down until they are revived - respawns will not get them up.
   - Example: *.staydown Bob*
 - `.playerheartcount (amount) (Player)`
-  - will set the number of hearts a player has. It will update back to correct amount once you place a heart. 
+  - will set the number of hearts a player has. It will update back to correct amount once you place a heart.
   - Example: *.playerheartcount 0 Bob*
 
 ### Castle/Clan Commands
-- `.claim (Player) `
+- `.claim (Player)`
   - will change a castle heart owner to whomever is named. This will only work if you're on top of a heart, making it very apparent which heart you'll be changing.
 - `.freezeheart`
   - will freeze the timer of the heart, preventing decay. This will only work if you're on top of a heart, making it very apparent which heart you'll be changing.
 - `.thawheart`
   - will unfreeze the timer of the heart, allowing decay. This will only work if you're on top of a heart, making it very apparent which heart you'll be changing.
-- `.frozenhearts`
+- `.frozenhearts (page)`
   - will list all frozen hearts on the server.
 - `.relocatereset`
   - will reset the relocation timer for the castle heart you are next to. This will only work if you're on top of a heart, making it very apparent which heart you'll be changing.
@@ -296,12 +292,12 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Example: *.clan add Joe “The Best Clan”*
   - Shortcut: *.c a*
 - `.clan kick (Player)`
-  - kicks a player from their clan. You cannot kick a leader, change their role first.																						
+  - kicks a player from their clan. You cannot kick a leader, change their role first.
   - Example: *.clan kick Joe*
   - Shortcut: *.c k*
 - `.clan changerole (Player) (Role)`
   - Changes the role of a player in their clan. Roles: member, officer, leader
-  - Example: *.clan changerole Joe 1*
+  - Example: *.clan changerole Joe officer*
   - Shortcut: *.c cr*
 - `.clan castles (Clan Name)`
   - will list all castles owned by a clan.
@@ -311,7 +307,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Renames a clan. If multiple clans match the name, provide the leader's name as well.
   - Example: *.clan rename "Wolf Pack" "Night Wolves" "AlphaWolf"*
   - Shortcut: *.c rn*
- 
+
 ### Region/Map Commands
 - `.incomingdecay`
   - will list 6 of the plots that are closest to decay.
@@ -320,16 +316,16 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - will list how many plots are owned per player, in descending order.
   - Example: *.plotsowned*
   - Shortcut: *.po 2*
-- `.clanplotsowned`
+- `.clanplotsowned (page)`
   - will list how many plots are owned per clan, in descending order.
   - Example: *.clanplotsowned*
   - Shortcut: *.cpo*
 - `.teleporttoplot (PlotID)`
-  - will teleport you to the plot specified.																								
+  - will teleport you to the plot specified.
   - Example: *.teleporttoplot 1*
   - Shortcut: *.tpp*
 - `.plotinfo (PlotID)`
-  - will list information on the plot specified.																								
+  - will list information on the plot specified.
   - Example: *.plotinfo 1*
 - `.revealmap (Player)`
   - will reveal the map for a player named, or the user if no one is named.
@@ -345,7 +341,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Example: *.region unlock silverlighthills*
   - Shortcut: *.region ul*
 - `.region gate (Region) (level)`
-  - will gate a region, preventing new players below the level threshold from entering it. Players already in the region will not be kicked but cannot reenter if they leave. It will keep track of the highest level a player has reached, providing accomodation for gear removal or "prestiging"
+  - will gate a region, preventing new players below the level threshold from entering it. Players already in the region will not be kicked but cannot reenter if they leave. It will keep track of the highest level a player has reached, providing accommodation for gear removal or "prestiging"
   - Example: *.region gate silverlighthills 60*
   - Shortcut: *.region g*
 - `.region ungate (Region)`
@@ -387,7 +383,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - will give perfect stats to the servant in the coffin you are looking at.
   - Shortcut: *.servant p*
 - `.servant add (PrefabIDName)`
-  - will add a servant to the coffin you are looking at. 
+  - will add a servant to the coffin you are looking at.
   - Example: *.servant add churchoflight_lightweaver*
   - Shortcut: *.servant a*
   - See .search npc above for prefab IDs
@@ -404,10 +400,10 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
 - `.servant completemission`
   - will complete the mission of the servant in the coffin you are looking at.
   - Shortcut: *.servant cm*
-	
+
 ### Prisoner Commands
 - `.prisoner gruel (chance) (min) (max)`
-  - will set the chance of a prisoner mutating, as well as the min and max time they will take to escape. 
+  - will set the chance of a prisoner mutating, as well as the min and max time they will take to escape.
   - Example: *.prisoner gruel 50 10 30* (50% chance to mutate, blood can increase from 10% to 30%)
 - `.prisoner grueltransform (prefab)`
   - will set the prisoner to transform into the specified prefab when they mutate.
@@ -424,7 +420,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Shows the current settings for a specific prisoner feed type.
   - Example: *.prisoner feedsettings Rat*
 
-### Misc Commands	
+### Misc Commands
 - `.boss lock (boss)`
   - will stop a boss from spawning. When attempting to track said boss, it will say it is locked.
   - Example: *.boss lock solarus*
@@ -447,10 +443,10 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Shortcut: *.boss up*
 - `.boss modifyprimal (bossname) (level)`
   - will change the level of the primal boss to the level specified. Upon respawn, they will be their original level. You can still modify the level of the boss while its in its 'blood walk', and it will spawn with that level. Must be near boss.
-  - Example: *.boss modifypriumal octavian 100*
+  - Example: *.boss modifyprimal octavian 100*
   - Shortcut: *.boss mp*
 - `.boss teleportto (name) (WhichOne)`
-  - will teleport you to the boss specified. Must be near boss. If multiple bosses are up, you can specify which one to teleport to. Bosses must have been spawned in at least once on the map to be teleported to.
+  - will teleport you to the boss specified. If multiple bosses are up, you can specify which one to teleport to. Bosses must have been spawned in at least once on the map to be teleported to.
   - Example: *.boss teleportto TheNameOfTheBoss 1*
   - Shortcut: *.boss tt*
 - `.boss list`
@@ -462,7 +458,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
   - Shortcut: *.fr*
 - `.cleancontainerlessshards`
   - Will clean up the map of any shards that are not in a proper container, including map icon. Clean up command for owners running old mods on post-hotfix game.
-- `everyonedaywalker`
+- `.everyonedaywalker`
   - Will give everyone sun invuln upon logging in. Useful for testing or events.
   - Shortcut: *.ed*
 - `.globalbatvision`
@@ -477,6 +473,8 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
 - `.ping`
   - tells you your latency
   - Shortcut: *.p*
+- `.pace`
+  - will match your movement speed to that of the closest NPC, allowing you to walk alongside them naturally. Use again to toggle back to normal speed.
 - `.clan list (page #)`
   - Shows a list of populated clans (and their message). Newest clans are at the start of the list.
   - Example: *.clan list 1*
@@ -504,7 +502,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
 </details>
 
 ## Command Types
- 
+
    - Manage admins, see player information, and unbind players from character files.
    - Create, modify, list, and remove announcements to communicate important information to players at specified times.
    - Control gear and item properties (hats and batform flying), particularly for soul shards, including durability and drop management.
@@ -523,7 +521,7 @@ Feel free to reach out to me on Discord (odjit) if you have any questions or nee
 Updated for V Rising 1.1 as of v2.5.0!
 Updated for V Rising 1.0 as of v1.9.0!
 
-[Territory ID Map](https://i.imgur.com/VkXoKwB.jpeg)
+[Territory ID Map](https://i.imgur.com/nxSzQPI.jpeg)
 
 [V Rising Modding Discord](https://vrisingmods.com/discord)                     |          [V Rising Modding Wiki](https://wiki.vrisingmods.com)
 
@@ -550,7 +548,7 @@ Updated for V Rising 1.0 as of v1.9.0!
 
 - **Using Commands:** The commands for KindredCommands go into the chat box, not the console. However, players will first need to authenticate themselves in the console chat. You can find instructions on how to do this [here](https://wiki.vrisingmods.com/user/Using_Server_Mods.html).
 - For thorough mod installation instructions and troubleshooting, visit [VRising Mod Installation Guide](https://wiki.vrisingmods.com/user/Mod_Install.html).
-- If you encounter any issues, refer to the V Rising Modding Community discord for tech support. 
+- If you encounter any issues, refer to the V Rising Modding Community discord for tech support.
 </details>
 
 
